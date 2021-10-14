@@ -22,15 +22,13 @@ namespace TestMassTransit
 
                         c.UsingInMemory((context, config) =>
                         {
-                            config.ConfigureEndpoints(context);
-
                             // How to refactor, is it possible?
                             // ReceiveEndpoint subscribes to a queue.
                             config.ReceiveEndpoint("message-queue", c
-                                => c.ConfigureConsumer<MessageConsumer>(context));
+                                => c.Consumer<MessageConsumer>(context));
 
                             config.ReceiveEndpoint("user-queue", c
-                                => c.ConfigureConsumer<UserConsumer>(context));
+                                => c.Consumer<UserConsumer>(context));
                         });
                     });
 
