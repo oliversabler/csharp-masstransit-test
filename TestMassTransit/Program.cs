@@ -1,14 +1,24 @@
 using MassTransit;
+using MassTransit.ActiveMqTransport.Configurators;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using TestMassTransit.Consumers;
 
 namespace TestMassTransit
 {
     public class Program
     {
+        public static IConfiguration Configuration { get; set; }
+
         public static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -20,10 +30,11 @@ namespace TestMassTransit
                     {
                         c.AddConsumers(typeof(IAssemblyMarker).Assembly);
 
-                        c.UsingInMemory((context, config) =>
+                        c.UsingActiveMq((context, config) =>
                         {
+                            config.Host(new ConfigurationHostSettings(new Uri(Configuration["ActiveMqUri"])));
+
                             // How to refactor, is it possible?
-                            // ReceiveEndpoint subscribes to a queue.
                             config.ReceiveEndpoint("message-queue", c
                                 => c.Consumer<MessageConsumer>(context));
 
