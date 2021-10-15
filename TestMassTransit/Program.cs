@@ -1,6 +1,7 @@
 using MassTransit;
 using MassTransit.ActiveMqTransport.Configurators;
 using MassTransit.Definition;
+using MassTransit.Registration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,7 +35,9 @@ namespace TestMassTransit
                         {
                             config.Host(new ConfigurationHostSettings(new Uri(Configuration["ActiveMqUri"])));
 
-                            config.ConfigureEndpoints(context, DefaultEndpointNameFormatter.Instance);
+                            config.ConfigureEndpoints(
+                                context,
+                                DefaultEndpointNameFormatter.Instance);
                         });
                     });
 

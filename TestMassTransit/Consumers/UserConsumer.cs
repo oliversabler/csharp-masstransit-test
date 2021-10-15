@@ -5,9 +5,9 @@ using TestMassTransit.Models;
 
 namespace TestMassTransit.Consumers
 {
-    public class UserConsumer : IConsumer<User>
+    public class UserConsumer : IConsumer<User>, IConsumer<UserLocation>
     {
-        readonly ILogger<MessageConsumer> _logger;
+        private readonly ILogger<MessageConsumer> _logger;
 
         public UserConsumer(ILogger<MessageConsumer> logger)
         {
@@ -17,6 +17,13 @@ namespace TestMassTransit.Consumers
         public Task Consume(ConsumeContext<User> context)
         {
             _logger.LogInformation($"Received User: {context.Message.Name}");
+
+            return Task.CompletedTask;
+        }
+
+        public Task Consume(ConsumeContext<UserLocation> context)
+        {
+            _logger.LogInformation($"Received User Location: {context.Message.Location}");
 
             return Task.CompletedTask;
         }

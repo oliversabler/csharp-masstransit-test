@@ -7,7 +7,7 @@ namespace TestMassTransit.Consumers
 {
     public class MessageConsumer : IConsumer<Message>
     {
-        readonly ILogger<MessageConsumer> _logger;
+        private readonly ILogger<MessageConsumer> _logger;
 
         public MessageConsumer(ILogger<MessageConsumer> logger)
         {
