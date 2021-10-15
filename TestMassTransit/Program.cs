@@ -1,10 +1,10 @@
 using MassTransit;
 using MassTransit.ActiveMqTransport.Configurators;
+using MassTransit.Definition;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using TestMassTransit.Consumers;
 
 namespace TestMassTransit
 {
@@ -34,12 +34,7 @@ namespace TestMassTransit
                         {
                             config.Host(new ConfigurationHostSettings(new Uri(Configuration["ActiveMqUri"])));
 
-                            // How to refactor, is it possible?
-                            config.ReceiveEndpoint("message-queue", c
-                                => c.Consumer<MessageConsumer>(context));
-
-                            config.ReceiveEndpoint("user-queue", c
-                                => c.Consumer<UserConsumer>(context));
+                            config.ConfigureEndpoints(context, DefaultEndpointNameFormatter.Instance);
                         });
                     });
 
