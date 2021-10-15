@@ -18,7 +18,7 @@ namespace TestMassTransit
                 {
                     services.AddMassTransit(c =>
                     {
-                        c.AddConsumers(typeof(IConsumerMarker).Assembly);
+                        c.AddConsumers(typeof(IAssemblyMarker).Assembly);
 
                         c.UsingInMemory((context, config) =>
                         {

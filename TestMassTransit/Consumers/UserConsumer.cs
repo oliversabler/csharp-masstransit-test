@@ -5,7 +5,7 @@ using TestMassTransit.Models;
 
 namespace TestMassTransit.Consumers
 {
-    public class UserConsumer : IConsumer<User>, IConsumerMarker
+    public class UserConsumer : IConsumer<User>
     {
         readonly ILogger<MessageConsumer> _logger;
 

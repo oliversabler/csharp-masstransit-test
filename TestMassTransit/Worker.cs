@@ -24,10 +24,10 @@ namespace TestMassTransit
             while (!stoppingToken.IsCancellationRequested)
             {
                 await _bus.Publish(new Message { Text = $"Message: The time is {DateTimeOffset.Now}" });
-                await Task.Delay(2500, stoppingToken);
+                await Task.Delay(1500, stoppingToken);
 
                 await _bus.Publish(new User { Name = $"User: Created new user: {_faker.Name.FullName()}" });
-                await Task.Delay(2500, stoppingToken);
+                await Task.Delay(1500, stoppingToken);
             }
         }
     }

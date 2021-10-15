@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  testmasstransit:
+    image: ${DOCKER_REGISTRY-}testmasstransit
+    build:
+      context: .
+      dockerfile: Dockerfile
